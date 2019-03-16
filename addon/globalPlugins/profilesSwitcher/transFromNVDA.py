@@ -1,0 +1,1 @@
+transFromNVDA = lambda message: _(message)
