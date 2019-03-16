@@ -23,7 +23,7 @@ addon_info = {
 	# Author(s)
 	"addon_author" : u"Hamada Trichine <hamadalog25@gmail.com>",
 	# URL for the add-on documentation support
-	"addon_url" : "http://hamadatr.servegame.com/nvda-addons",
+	"addon_url" : "https://github.com/hamadatrichine/profilesSwitcher",
 	# Documentation file name
 	"addon_docFileName" : "readme.html",
     "addon_nvdaMinimumVersion" : "2018.2",
