@@ -17,6 +17,7 @@ addonHandler.initTranslation()
 confspec = {
     'firstProfile':'string(default="")',
     'secondProfile':'string(default="")',
+    'shouldPlaySound':'boolean(default=True)',
     'active':'integer(default=0)'
 }
 config.conf.spec['profilesSwitcher'] = confspec
@@ -34,7 +35,7 @@ class GlobalPlugin(GlobalPlugin):
             if profileToActivate:
                 message(
                     # Translators: A message spoken when a selected profile is activated.
-                    _('The {profile} profile is now active.'.format(profile=profileToActivate))
+                    _('The {profile} profile is now active.').format(profile=profileToActivate)
                 )
                 return True
             else:
@@ -49,22 +50,32 @@ class GlobalPlugin(GlobalPlugin):
                 # Translators: An error message spoken when a configuration profile is not found.
                 _('Error, the {profile} profile does not exist.').format(profile=splitext(notFoundFileName)[0])
             )
-            beep(75, 200)
+            self.playTone(75, 200)
             return False
 
     def script_switchProfile(self, gesture):
         if config.conf['profilesSwitcher']['active']:
             if self.activateProfile('firstProfile'):
                 config.conf['profilesSwitcher']['active'] = 0
-                beep(250, 50)
+                self.playTone(250, 50, 'left')
         else:
             if self.activateProfile('secondProfile'):
                 config.conf['profilesSwitcher']['active'] = 1
-                beep(250, 50)
+                self.playTone(250, 50, 'right')
 
     # Translators: The doc string for the switchProfile script.
     script_switchProfile.__doc__ = _('Switch back and forth between two configuration profiles.')
     script_switchProfile.category = SCRCAT_CONFIG
+
+    def playTone(self, pitch, length, stereoPosition='center'):
+        if not config.conf['profilesSwitcher']['shouldPlaySound']: return
+        if stereoPosition == 'left':
+            stereoPosition = (50, 0)
+        elif stereoPosition == 'right':
+            stereoPosition = (0, 50)
+        else:
+            stereoPosition = (50, 50)
+        beep(pitch, length, stereoPosition[0], stereoPosition[1])
 
     def terminate(self):
         gui.settingsDialogs.NVDASettingsDialog.categoryClasses.remove(SettingsPanel)
