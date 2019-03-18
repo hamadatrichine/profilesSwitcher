@@ -26,8 +26,8 @@ addon_info = {
 	"addon_url" : "https://github.com/hamadatrichine/profilesSwitcher",
 	# Documentation file name
 	"addon_docFileName" : "readme.html",
-    "addon_nvdaMinimumVersion" : "2018.2",
-    "addon_lastTestedNvdaVersion" : "2019.1",
+    "addon_nvdaMinimumVersion" : "2018.3",
+    "addon_lastTestedNvdaVersion" : "2018.4.1",
     "addon_updateChannel" : None,
 }
 
